@@ -1,31 +1,35 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twiwi</title>
+    <title>Python API Example</title>
 </head>
 <body>
-    <h1>Enter something:</h1>
-    <input type="text" id="inputField" placeholder="Enter text">
-    <button onclick="submitInput()">Submit</button>
-    <p id="output"></p>
+    <h1>Submit Input to Backend</h1>
+    <form id="inputForm">
+        <input type="text" id="inputField" placeholder="Enter something" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Result: <span id="result"></span></h2>
 
     <script>
-        async function submitInput() {
+        document.getElementById('inputForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
             const input = document.getElementById('inputField').value;
-            const response = await fetch('api', {
+
+            const response = await fetch('/api', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ input })
             });
 
-            const result = await response.json();
-            document.getElementById('output').innerText = "Result: " + result.result;
-        }
+            const data = await response.json();
+            document.getElementById('result').innerText = data.result;
+        });
     </script>
 </body>
 </html>
