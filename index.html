@@ -12,10 +12,10 @@
         <button type="submit">Submit</button>
     </form>
 
-    <h2>Result: <span id="result"></span></h2>
-<h2>Load and Display File:</h2>
-    <input type="file" id="fileInput" />
-    <pre id="fileDisplay"></pre>
+  <h1>Loaded URLs from urls.txt</h1>
+
+    <h2>URLs:</h2>
+    <div id="urlsList"></div>
     <script>
         document.getElementById('inputForm').addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -41,17 +41,26 @@
             }
         });
 
-        // Function to load and display the selected file
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];  // Get the file from the input
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('fileDisplay').textContent = e.target.result;  // Display file content
-                };
-                reader.readAsText(file);  // Read the file as text
-            }
-        });
+  // Fetch the contents of urls.txt
+        fetch('urls.txt')
+            .then(response => response.text())  // Read the content as text
+            .then(fileContent => {
+                const urls = fileContent.split(',');  // Split by comma
+
+                // Clear any previous URLs
+                document.getElementById('urlsList').innerHTML = '';
+
+                // Loop through each URL and display it
+                urls.forEach(url => {
+                    const urlElement = document.createElement('p');  // Create a <p> element for each URL
+                    urlElement.textContent = url.trim();  // Trim extra spaces
+                    document.getElementById('urlsList').appendChild(urlElement);  // Append to the list
+                });
+            })
+            .catch(error => {
+                console.error('Error loading the file:', error);
+                document.getElementById('urlsList').innerText = 'Failed to load URLs.';
+            });
     </script>
 </body>
 </html>
