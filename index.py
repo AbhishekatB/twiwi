@@ -1,7 +1,7 @@
 # index.py
 
 from http.server import BaseHTTPRequestHandler
-from functions import handle_get, handle_post
+from api.function import handle_get, handle_post
 import json
 
 class Handler(BaseHTTPRequestHandler):
