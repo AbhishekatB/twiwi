@@ -15,7 +15,7 @@
     <script>
         async function submitInput() {
             const input = document.getElementById('inputField').value;
-            const response = await fetch('/function', {
+            const response = await fetch('/api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
