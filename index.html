@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python App</title>
+    <title>Twiwi</title>
 </head>
 <body>
     <h1>Enter something:</h1>
@@ -15,7 +15,7 @@
     <script>
         async function submitInput() {
             const input = document.getElementById('inputField').value;
-            const response = await fetch('/api', {
+            const response = await fetch('api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
