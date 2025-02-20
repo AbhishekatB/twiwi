@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twiwi</title>
-    
 </head>
 <body>
     <h1>Submit Input to Backend</h1>
@@ -28,8 +27,12 @@
                 body: JSON.stringify({ input })
             });
 
-            const data = await response.json();
-            document.getElementById('result').innerText = data.result;
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('result').innerText = data.result;
+            } else {
+                document.getElementById('result').innerText = 'Error occurred!';
+            }
         });
     </script>
 </body>
