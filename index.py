@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 import json
-from functions import get_user_tweets, fetch_user_data
+from function import get_user_tweets, fetch_user_data
 
 class handler(BaseHTTPRequestHandler):
     routes = {
