@@ -1,33 +1,32 @@
+# index.py
+
 from http.server import BaseHTTPRequestHandler
-from os.path import join
+from functions import handle_get, handle_post
 import json
 
 class Handler(BaseHTTPRequestHandler):
+    
     def do_GET(self):
-        # Set the response code to 200 (OK)
+        # Call the function from functions.py to handle GET
+        response_data = handle_get()
+
+        # Send response
         self.send_response(200)
-        
-        # Set headers (you can change the content type depending on your data)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        
-        # Define the response data (you could also use files or other resources)
-        response_data = {"message": "Hello from the Python API!"}
-        
-        # Send the JSON data as the response
         self.wfile.write(json.dumps(response_data).encode())
         return
 
     def do_POST(self):
-        # Similar setup for POST requests
+        # Get the content length and read POST data
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
 
-        # Handle the incoming JSON data
+        # Parse the incoming JSON data
         data = json.loads(post_data.decode())
 
-        # You can process the data here
-        response_data = {"received": data}
+        # Call the function from functions.py to handle POST
+        response_data = handle_post(data)
 
         # Send response
         self.send_response(200)
