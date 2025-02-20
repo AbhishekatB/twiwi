@@ -14,9 +14,9 @@
     }
   ],
   "routes": [
-    {
-      "src": "/api/function",
-      "dest": "/api/function.py"
+     {
+      "src": "/api/(.*)",
+      "dest": "/index.py"
     },
     {
       "src": "/",
