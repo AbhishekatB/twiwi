@@ -13,12 +13,18 @@
     </form>
 
     <h2>Result: <span id="result"></span></h2>
-
+<h2>Load and Display File:</h2>
+    <input type="file" id="fileInput" />
+    <pre id="fileDisplay"></pre>
     <script>
         document.getElementById('inputForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             const input = document.getElementById('inputField').value;
-
+            const blob = new Blob([content], { type: 'text/plain' });  // Create a Blob (file) from the content
+            const link = document.createElement('a');  // Create an <a> element to download the file
+            link.href = URL.createObjectURL(blob);  // Create a URL for the Blob object
+            link.download = 'urls.txt';  // Specify the default filename
+            link.click();
             const response = await fetch('/api/function', {
                 method: 'POST',
                 headers: {
@@ -32,6 +38,18 @@
                 document.getElementById('result').innerText = data.result;
             } else {
                 document.getElementById('result').innerText = 'Error occurred!';
+            }
+        });
+
+        // Function to load and display the selected file
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];  // Get the file from the input
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('fileDisplay').textContent = e.target.result;  // Display file content
+                };
+                reader.readAsText(file);  // Read the file as text
             }
         });
     </script>
